@@ -1,6 +1,9 @@
 package com.example.joiningTables.controller;
 
+import com.example.joiningTables.dto.CommentResponse;
+import com.example.joiningTables.dto.PostResponse;
 import com.example.joiningTables.entity.User;
+import com.example.joiningTables.repository.UserRepository;
 import com.example.joiningTables.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +17,8 @@ import java.util.Optional;
 public class UserController {
     @Autowired
     UserService userService;
+    @Autowired
+    UserRepository userRepository;
 
     @PostMapping("/createUser")
     public ResponseEntity<User> createUser(@RequestBody User user) {

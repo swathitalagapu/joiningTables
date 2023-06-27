@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -14,15 +16,12 @@ import lombok.ToString;
 @Table(name = "post")
 public class Post {
     @Id
-    @GeneratedValue
     private int id;
     @Column
     private String title;
     @Column
     private String body;
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
-    private User user;
-//    @OneToMany(cascade =  CascadeType.ALL, mappedBy = "post")
-//    private List<Comment> comments;
+    @OneToMany(targetEntity = Comment.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="post_id", referencedColumnName = "id")
+    private List<Comment> comments;
 }

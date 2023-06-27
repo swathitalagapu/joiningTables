@@ -14,10 +14,10 @@ import java.util.List;
 
 public class User {
     @Id
-    @GeneratedValue
     private int id;
     @Column
     private String userName;
-//    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
-//    private List<Post> posts;
+    @OneToMany(targetEntity = Post.class, cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
+    private List<Post> posts;
 }

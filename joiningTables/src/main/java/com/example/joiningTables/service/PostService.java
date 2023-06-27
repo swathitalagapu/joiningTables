@@ -1,5 +1,6 @@
 package com.example.joiningTables.service;
 
+import com.example.joiningTables.dto.PostResponse;
 import com.example.joiningTables.entity.Post;
 import com.example.joiningTables.entity.User;
 import com.example.joiningTables.exception.DataNotFoundException;
@@ -21,19 +22,26 @@ public class PostService {
     PostRepository postRepository;
     public Optional<Post> createPost(int userId, Post post){
        Optional<Post> post1 = userRepository.findById(userId).map(user -> {
-            post.setUser(user);
+//            post.setUser(user);
             return postRepository.save(post);
         });
         return post1;
 
     }
 
-    public List<Post> getAllPostsByUserId(int userId){
-        if(!userRepository.existsById(userId)){
-            throw new DataNotFoundException("no data found");
-        }
-        List<Post> posts = postRepository.findByUserId(userId);
-        return posts;
+//    public List<Post> getAllPostsByUserId(int userId){
+//        if(!userRepository.existsById(userId)){
+//            throw new DataNotFoundException("no data found");
+//        }
+//        List<Post> posts = postRepository.findByUserId(userId);
+//        return posts;
+//    }
+public List<Post> getAllPosts(){
+    return postRepository.findAll();
+}
+    public Post getPostById(int id){
+
+        return postRepository.findById(id).orElse(null);
     }
 
     public Post updatePost(int id, Post post){
@@ -45,15 +53,16 @@ public class PostService {
               return updatedPost;
     }
 
-    public List<Post> deleteAllPostsOfUser(int userId){
-        if(!postRepository.existsById(userId)){
-            throw new DataNotFoundException("no data present");
-        }
-        List<Post> pst =  postRepository.deleteByUserId(userId);
-        return pst;
-    }
 
     public void deletePost(int id) {
         postRepository.deleteById(id);
+    }
+
+    public List<PostResponse> getPostInformation() {
+        return postRepository.getPostInformation();
+    }
+
+    public PostResponse getPostsById(int id){
+        return postRepository.getPostById(id);
     }
 }

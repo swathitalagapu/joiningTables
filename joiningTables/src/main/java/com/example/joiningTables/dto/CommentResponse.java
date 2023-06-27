@@ -1,25 +1,21 @@
-package com.example.joiningTables.entity;
+package com.example.joiningTables.dto;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
-@Entity
 @ToString
-@Table(name = "comment")
-public class Comment {
+public class CommentResponse {
 
-    @Id
+    private int postId;
     private int id;
-    @Column
     private String name;
-    @Column
     private String email;
-    @Column
     private String body;
+
 }

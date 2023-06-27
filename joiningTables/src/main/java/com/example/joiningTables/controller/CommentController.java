@@ -1,5 +1,6 @@
 package com.example.joiningTables.controller;
 
+import com.example.joiningTables.dto.CommentResponse;
 import com.example.joiningTables.entity.Comment;
 import com.example.joiningTables.entity.Post;
 import com.example.joiningTables.service.CommentService;
@@ -23,26 +24,39 @@ public class CommentController {
         return new ResponseEntity<>(comment, HttpStatus.CREATED);
     }
 
-    @GetMapping("/post/{postId}/comments")
-    public List<Comment> getAllCommentsByPostId(@PathVariable int postId){
-        return commentService.getAllCommentsByPostId(postId);
-    }
+    @GetMapping("/get")
+    public List<Comment> getAllComments() {
 
+        return commentService.getAllComments();
+    }
+    @GetMapping("/get/{id}")
+    public Comment findPostsById(@PathVariable int id) {
+        return commentService.getCommentsById(id);
+    }
     @PutMapping("/comments/{id}")
     public ResponseEntity<Comment> updateComment(@PathVariable int id, @RequestBody Comment comment){
         comment.setId(id);
         Comment cmt = commentService.updateComment(id, comment);
         return new ResponseEntity<>(cmt, HttpStatus.OK);
     }
-    @DeleteMapping("/post/{postId}/comments")
-    public List<Comment> deleteAllCommentsOfPost(@PathVariable int postId){
-        return commentService.deleteAllCommentsOfPost(postId);
-    }
-
     @DeleteMapping("/deleteComment")
     public void deleteComment(@PathVariable int id){
-        postService.deletePost(id);
+        commentService.deleteComment(id);
     }
 
+    @GetMapping("/getAllCommentsInfo")
+    public List<CommentResponse> getJointCommentsInfo(){
+        return commentService.getCommentInformation();
+    }
+
+    @GetMapping("getPosts/{id}/Comments")
+    public List<CommentResponse> getCommentsInfoByPostId(@PathVariable int id){
+        return commentService.getCommentssById(id);
+    }
+
+    @GetMapping("getComments/{id}")
+    public CommentResponse getCommentInfoByCommentId(@PathVariable int id){
+        return commentService.getCommentsByID(id);
+    }
 
 }
